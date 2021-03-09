@@ -13,7 +13,7 @@ router.get('/', (req,res) => {
     })
     .catch(err => {
         res.status(500).json({
-            message: ("The posts information could not be retrieved", err)
+            message: "The posts information could not be retrieved", err
         })
     })
 })
@@ -26,14 +26,14 @@ router.get('/:id', (req,res) => {
             res.status(200).json(posts);
         }else{
             res.status(404).json({
-                message: ("The post with the specified ID does not exist")
+                message: "The post with the specified ID does not exist"
             })
         }
     })
     .catch(err => {
         console.log(err);
         res.status(500).json({
-            message: ("The post information could not be retrieved", err)
+            message: "The post information could not be retrieved", err
         })
     })
 })
@@ -50,7 +50,7 @@ router.post('/', (req,res) => {
         })
         .catch(err => {
             res.status(500).json({
-                message: ("There was an error while saving the post to the database", err)
+                message: "There was an error while saving the post to the database", err
             })
         })
     }
@@ -74,12 +74,23 @@ router.put('/:id', async (req,res) => {
         }
     }catch (err) {
         res.status(500).json({
-            message:("The post information could not be modified", err)
+            message: "The post information could not be modified", err
         })
     }
 })
 
 // Delete post
-
+router.delete('/:id', async (req,res) => {
+    try{
+        const deleted = await Post.remove(req.params.id)
+        if(!deleted) {
+            res.status(404).json({message: "The post with the specified ID does not exist"})
+        }else{
+            res.json({message: `The post was deleted`})
+        }
+    }catch (err) {
+        res.status(500).json({message: "The post could not be deleted", err})
+    }
+})
 
 module.exports = router
