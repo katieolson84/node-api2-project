@@ -69,7 +69,7 @@ router.put('/:id', async (req,res) => {
             if(!updatedPost){
                 res.status(404).json({message:"The post with the specified ID does not exisit"})
             }else{
-                res.json(changes)
+                res.json(updatedPost)
             }
         }
     }catch (err) {
@@ -86,7 +86,7 @@ router.delete('/:id', async (req,res) => {
         if(!deleted) {
             res.status(404).json({message: "The post with the specified ID does not exist"})
         }else{
-            res.json({message: `The post was deleted`})
+            res.json(deleted)
         }
     }catch (err) {
         res.status(500).json({message: "The post could not be deleted", err})
